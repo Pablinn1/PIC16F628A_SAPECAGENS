@@ -1,3 +1,4 @@
+;FUNCIONA
 ; Pisca Pisca com TIMER 0
 
 #INCLUDE <P16F628A.INC>
@@ -9,10 +10,10 @@ ORG 0
 GOTO MAIN
 
 ORG 0X04
-BCF INTCON, TOIF      ; Após a interrupção, limpo o "cache" responsável por travar o  programa
+BCF INTCON, T0IF      ; Após a interrupção, limpo o "cache" responsável por travar o  programa
 DECFSZ TEMPO , F      ; Decremento a variável tempo a fim de gastar tempo KKKKKKKKK (me ajuda)
 RETFIE                ; Tempo > 0, fico em um loop de decremento   Tempo = 0, pulo uma instrução e começa a bagaceira
-MOVFW CONTA
+MOVF CONTA, W
 MOVWF TEMPO           ; Reabasteço a variável para as futuras interrupções
 
 MOVLW B'10000000'
@@ -48,7 +49,7 @@ GOTO FIM
 
 END
 
-; Cálculo para achar a frequencia/periodo operante do TIMER0
+; Cálculo para achar a frequencia/tempo operante do TIMER0
 
 ; F = 4mhz/ ( 4 * pre-scale * (256 - 0) )
 
@@ -60,3 +61,6 @@ END
 
 ; É necessário fazer um laço de repetição onde a interrupção do timer ocorra 15 vezes
 ; Para que ai a rotina de mudança de estado do led seja executada
+
+; O tempo do TIMER 0 é de 0,0655, com os 15 do loop ficará em 1 segundo
+; Portante o LED ficará 1s aceso e 1 apagado, logo o período do LED é de 2s
