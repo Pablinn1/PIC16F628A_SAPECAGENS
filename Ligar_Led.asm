@@ -1,0 +1,20 @@
+
+;LIGAR UM LED :)
+
+#INCLUDE <P16F628A.INC>
+
+ORG 0
+GOTO MAIN
+ORG 0X04
+RETFIE 
+
+MAIN: 
+
+BANKSEL TRISB
+MOVLW B'00000000' ; Configuro os PINOS B como saída
+MOVWF TRISB
+BANKSEL PORTB
+MOVLW B'00000001' ; Coloco todos os PINOS B em nível lógico baixo, exceto 
+MOVWF PORTB
+
+END
