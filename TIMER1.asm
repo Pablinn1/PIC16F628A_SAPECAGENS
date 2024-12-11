@@ -84,7 +84,7 @@ END
 ; 0x0B = 11 VAI PARA O TMR1H
 ; 0XDC = 220 VAI PARA O TMR1L
 
-; Com essa repatição cada registrador não ultrapassa o 1 byte de memória
+; Com essa repartição cada registrador não ultrapassa o 1 byte de memória
 
 ; O número em HEXA é necessário para preencher os registradores a fim de controlar o tempo que o TIMER vai estourar
 ; O perído do TIMER1 é de 0,5s, logo o led terá um perído de 1 segundo, pois será o momento ligado e o desligado
