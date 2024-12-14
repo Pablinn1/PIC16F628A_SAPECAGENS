@@ -20,11 +20,19 @@
 ORG 0
     GOTO MAIN
 
-ORG 0X04
+  TEMPO EQU 0X20
+  CONTA EQU 0X21
 
+ORG 0X04
     BCF PIR1, TMR2IF    ; Limpa a flag de interrupção do TIMER2
-    MOVLW B'10000000'
-    XORWF PORTB, F
+    DECFSZ TEMPO, F     ; Decremento tempo a cada interação e pulo uma instrução caso o conteúdo seja 0
+    RETFIE
+
+    MOVF CONTA, W       ; Recarrego Tempo para a proxima interrupção
+    MOVWF TEMPO
+
+    MOVLW B'10000000'  
+    XORWF PORTB, F     ; Lógica doidera essa
     RETFIE
 
 MAIN:
@@ -42,10 +50,17 @@ BANKSEL TRISB           ; Adentro no banco dos registradores TRISB, PIE1, INTCON
 
 BANKSEL T2CON           ; Adentro no banco do registrador T2CON
 
+    CLRF PORTB
+    
     MOVLW B'01111111'   ; T2CON é responsável pelo controle do TIMER2
     MOVWF T2CON         ; O bit 7 é fodase / 6 : 3 são para o pos scale
                         ; O bit 2 é para o acionamento do TIMER2
                         ; Os bits 1:0 são para a seleção do pre scale
+
+
+    MOVLW D'15'        ; Quantidade de loops necessários para fazer o período do timer ser de 1s
+    MOVWF TEMPO
+    MOVWF CONTA
 
 FIM:
 
@@ -55,4 +70,4 @@ END
 
 
 
-; T = 1x10^-6 * 16 * 16 * 255 = 0,065536
+; T = 1x10^-6 * 16 * 16 * 255 = 0,065536 * 15 = 1s
