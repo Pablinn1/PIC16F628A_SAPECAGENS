@@ -30,6 +30,7 @@ CALL ATRASO
 BSF LED           ; Coloco o Led (Portab 0) em on
 CALL ATRASO
 
+GOTO FREQ         ; Faz com que não tenha perigo de eu pular a instrução do piscas-pisca
 
 ATRASO:          ; Função responsável por gastar tempo no ciclo de interações
 
@@ -60,8 +61,8 @@ END
 
 ;(749 * 170) + 507 = 127.837 ciclos   
 ; 127.837 * Tempo do ciclo de máquina
-; 127.837 * 4us = 0.51136s 
-; Aproximadamente 1 HZ
+; 127.837 * 4us = 0.51136s              (Tempo que o led ficará ligado ou desligado, configurando em um período de 1s), LOGO...
+; Aproximadamente a frequência é de 1 HZ
 
 
 ; OBS: Neste caso a frequência do oscilador do processador é 1 MHZ
